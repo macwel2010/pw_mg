@@ -25,3 +25,7 @@ jobs:
       run: python -m playwright install
     - name: Run
       run: python main.py
+      env:
+        EMAIL: ${{ secrets.EMAIL }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+        LOGIN_URL: ${{ secrets.LOGIN_URL }}
