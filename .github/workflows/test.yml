@@ -40,4 +40,4 @@ jobs:
         EMAIL: ${{ secrets.EMAIL }}
         PASSWORD: ${{ secrets.PASSWORD }}
         LOGIN_URL: ${{ secrets.LOGIN_URL }}
-        BROWSER_STATE: ${{ secrets.BROWSER_STATE }}
+        BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
