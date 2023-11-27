@@ -7,8 +7,12 @@ on:
         required: false
         default: 30
         type: number
-  schedule:
-    - cron: "*/7 * * * *"
+      number_of_iterations:
+        description: 'Number of iterations'
+        required: false
+        default: 10
+        type: number
+
 jobs:
   setup-matrix:
     runs-on: ubuntu-latest
@@ -31,7 +35,7 @@ jobs:
 
   test:
     needs: setup-matrix
-    timeout-minutes: 5
+    timeout-minutes: 60
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 30
@@ -45,6 +49,17 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
+
+    - name: Cache Python dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/pip
+          /home/runner/.cache/ms-playwright
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -52,32 +67,12 @@ jobs:
     - name: Ensure browsers are installed
       run: python -m playwright install
 
-    - name: 1. Run
-      run: python main.py
-      env:
-        EMAIL: ${{ secrets.EMAIL }}
-        PASSWORD: ${{ secrets.PASSWORD }}
-        LOGIN_URL: ${{ secrets.LOGIN_URL }}
-        BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
-
-    - name: 2. Run
-      run: python main.py
-      env:
-        EMAIL: ${{ secrets.EMAIL }}
-        PASSWORD: ${{ secrets.PASSWORD }}
-        LOGIN_URL: ${{ secrets.LOGIN_URL }}
-        BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
-
-    - name: 3. Run
-      run: python main.py
-      env:
-        EMAIL: ${{ secrets.EMAIL }}
-        PASSWORD: ${{ secrets.PASSWORD }}
-        LOGIN_URL: ${{ secrets.LOGIN_URL }}
-        BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
-
-    - name: 4. Run
-      run: python main.py
+    - name: Running iterations ${{ github.event.inputs.number_of_iterations }} times
+      run: |
+        for i in $(seq 1 ${{ github.event.inputs.number_of_iterations }}); do
+          echo "Running instance $i"
+          python main.py
+        done
       env:
         EMAIL: ${{ secrets.EMAIL }}
         PASSWORD: ${{ secrets.PASSWORD }}
