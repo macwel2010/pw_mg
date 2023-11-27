@@ -11,30 +11,44 @@ on:
         required: true
         type: number
 
+# jobs:
+#   test:
+#     timeout-minutes: 5
+#     runs-on: ubuntu-latest
+#     strategy:
+#       max-parallel: 30
+#       matrix:
+#         instance: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+
+
 jobs:
-  prepare-matrix:
+  setup-matrix:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - id: set-matrix
         run: |
-          n=${{ github.event.inputs.number_of_runs }}
-          array=()
-          for i in $(seq 1 $n); do
-              array+=($i)
+          echo "Creating a matrix with ${{ github.event.inputs.number_of_runs }} runs"
+          matrix="{\"instance\": ["
+          for i in $(seq 1 ${{ github.event.inputs.number_of_runs }}); do
+            matrix+="\"$i\""
+            if [ $i -lt ${{ github.event.inputs.number_of_runs }} ]; then
+              matrix+=", "
+            fi
           done
-          echo "::set-output name=matrix::$(echo ${array[@]} | jq -R 'split(" ") | {instance: .}')"
+          matrix+="]}"
+          echo "Matrix: $matrix"
+          echo "::set-output name=matrix::$matrix"
 
   test:
+    needs: setup-matrix
     timeout-minutes: 5
-    needs: prepare-matrix
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 30
-      matrix:
-        matrix: ${{fromJson(needs.prepare-matrix.outputs.matrix)}}
-
+      matrix: ${{fromJson(needs.setup-matrix.outputs.matrix)}}
     steps:
     - uses: actions/checkout@v3
       with:
