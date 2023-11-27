@@ -65,65 +65,56 @@ jobs:
     - name: Ensure browsers are installed
       run: python -m playwright install
 
-    - name: Run
-      run: 1. python main.py
+    - name: 1. Run
+      run: python main.py
       env:
         EMAIL: ${{ secrets.EMAIL }}
         PASSWORD: ${{ secrets.PASSWORD }}
         LOGIN_URL: ${{ secrets.LOGIN_URL }}
         BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
 
-    - name: Run
-      run: 2. python main.py
+    - name: 2. Run
+      run: python main.py
       env:
         EMAIL: ${{ secrets.EMAIL }}
         PASSWORD: ${{ secrets.PASSWORD }}
         LOGIN_URL: ${{ secrets.LOGIN_URL }}
         BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
 
-    - name: Run
-      run: 3. python main.py
+    - name: 3. Run
+      run: python main.py
       env:
         EMAIL: ${{ secrets.EMAIL }}
         PASSWORD: ${{ secrets.PASSWORD }}
         LOGIN_URL: ${{ secrets.LOGIN_URL }}
         BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
 
-    - name: Run
-      run: 4. python main.py
+    - name: 4. Run
+      run: python main.py
       env:
         EMAIL: ${{ secrets.EMAIL }}
         PASSWORD: ${{ secrets.PASSWORD }}
         LOGIN_URL: ${{ secrets.LOGIN_URL }}
         BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
 
-    - name: Run
-      run: 5. python main.py
+    - name: 5. Run
+      run: python main.py
       env:
         EMAIL: ${{ secrets.EMAIL }}
         PASSWORD: ${{ secrets.PASSWORD }}
         LOGIN_URL: ${{ secrets.LOGIN_URL }}
         BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
 
-    - name: Run
-      run: 6. python main.py
+    - name: 6. Run
+      run: python main.py
       env:
         EMAIL: ${{ secrets.EMAIL }}
         PASSWORD: ${{ secrets.PASSWORD }}
         LOGIN_URL: ${{ secrets.LOGIN_URL }}
         BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
 
-    - name: Run
-      run: 7. python main.py
-      env:
-        EMAIL: ${{ secrets.EMAIL }}
-        PASSWORD: ${{ secrets.PASSWORD }}
-        LOGIN_URL: ${{ secrets.LOGIN_URL }}
-        BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
-
-
-    - name: Run
-      run: 8. python main.py
+    - name: 7. Run
+      run: python main.py
       env:
         EMAIL: ${{ secrets.EMAIL }}
         PASSWORD: ${{ secrets.PASSWORD }}
@@ -131,8 +122,8 @@ jobs:
         BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
 
 
-    - name: Run
-      run: 9. python main.py
+    - name: 8. Run
+      run: python main.py
       env:
         EMAIL: ${{ secrets.EMAIL }}
         PASSWORD: ${{ secrets.PASSWORD }}
@@ -140,8 +131,17 @@ jobs:
         BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
 
 
-    - name: Run
-      run: 10. python main.py
+    - name: 9. Run
+      run: python main.py
+      env:
+        EMAIL: ${{ secrets.EMAIL }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+        LOGIN_URL: ${{ secrets.LOGIN_URL }}
+        BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
+
+
+    - name: 10. Run
+      run: python main.py
       env:
         EMAIL: ${{ secrets.EMAIL }}
         PASSWORD: ${{ secrets.PASSWORD }}
