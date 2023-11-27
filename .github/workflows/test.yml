@@ -1,27 +1,14 @@
 name: Playwright Tests
 on:
-  # push:
-  #   branches: [ main, master ]
-  # pull_request:
-  #   branches: [ main, master ]
   workflow_dispatch:
     inputs:
       number_of_runs:
         description: 'Number of runs'
-        required: true
+        required: false
+        default: 30
         type: number
-
-# jobs:
-#   test:
-#     timeout-minutes: 5
-#     runs-on: ubuntu-latest
-#     strategy:
-#       max-parallel: 30
-#       matrix:
-#         instance: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
-
-
+  schedule:
+    - cron: "*/7 * * * *"
 jobs:
   setup-matrix:
     runs-on: ubuntu-latest
@@ -90,57 +77,6 @@ jobs:
         BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
 
     - name: 4. Run
-      run: python main.py
-      env:
-        EMAIL: ${{ secrets.EMAIL }}
-        PASSWORD: ${{ secrets.PASSWORD }}
-        LOGIN_URL: ${{ secrets.LOGIN_URL }}
-        BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
-
-    - name: 5. Run
-      run: python main.py
-      env:
-        EMAIL: ${{ secrets.EMAIL }}
-        PASSWORD: ${{ secrets.PASSWORD }}
-        LOGIN_URL: ${{ secrets.LOGIN_URL }}
-        BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
-
-    - name: 6. Run
-      run: python main.py
-      env:
-        EMAIL: ${{ secrets.EMAIL }}
-        PASSWORD: ${{ secrets.PASSWORD }}
-        LOGIN_URL: ${{ secrets.LOGIN_URL }}
-        BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
-
-    - name: 7. Run
-      run: python main.py
-      env:
-        EMAIL: ${{ secrets.EMAIL }}
-        PASSWORD: ${{ secrets.PASSWORD }}
-        LOGIN_URL: ${{ secrets.LOGIN_URL }}
-        BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
-
-
-    - name: 8. Run
-      run: python main.py
-      env:
-        EMAIL: ${{ secrets.EMAIL }}
-        PASSWORD: ${{ secrets.PASSWORD }}
-        LOGIN_URL: ${{ secrets.LOGIN_URL }}
-        BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
-
-
-    - name: 9. Run
-      run: python main.py
-      env:
-        EMAIL: ${{ secrets.EMAIL }}
-        PASSWORD: ${{ secrets.PASSWORD }}
-        LOGIN_URL: ${{ secrets.LOGIN_URL }}
-        BROWSER_STATE: ${{ secrets.BROWSER_STATE_1 }}
-
-
-    - name: 10. Run
       run: python main.py
       env:
         EMAIL: ${{ secrets.EMAIL }}
