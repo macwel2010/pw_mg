@@ -19,7 +19,12 @@ jobs:
     steps:
       - id: set-matrix
         run: |
-          echo "::set-output name=matrix::$(jq -nc --argjson number ${{ github.event.inputs.number_of_runs }} '{"instance": [range(1; $number+1)]}')"
+          n=${{ github.event.inputs.number_of_runs }}
+          array=()
+          for i in $(seq 1 $n); do
+              array+=($i)
+          done
+          echo "::set-output name=matrix::$(echo ${array[@]} | jq -R 'split(" ") | {instance: .}')"
 
   test:
     timeout-minutes: 5
