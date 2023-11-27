@@ -10,14 +10,25 @@ on:
         description: 'Number of runs'
         required: true
         type: number
+
 jobs:
+  prepare-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: |
+          echo "::set-output name=matrix::$(jq -nc --argjson number ${{ github.event.inputs.number_of_runs }} '{"instance": [range(1; $number+1)]}')"
+
   test:
     timeout-minutes: 5
+    needs: prepare-matrix
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 30
       matrix:
-        instance: ${{ fromJson('[' + join(range(1, github.event.inputs.number_of_runs + 1), ', ') + ']') }}
+        matrix: ${{fromJson(needs.prepare-matrix.outputs.matrix)}}
 
     steps:
     - uses: actions/checkout@v3
