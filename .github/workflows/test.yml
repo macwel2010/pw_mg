@@ -35,10 +35,8 @@ jobs:
 
   test:
     needs: setup-matrix
-    timeout-minutes: 60
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 30
       matrix: ${{fromJson(needs.setup-matrix.outputs.matrix)}}
     steps:
     - uses: actions/checkout@v3
