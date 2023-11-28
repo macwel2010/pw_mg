@@ -38,6 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{fromJson(needs.setup-matrix.outputs.matrix)}}
+      max-parallel: 30
     steps:
     - uses: actions/checkout@v3
       with:
